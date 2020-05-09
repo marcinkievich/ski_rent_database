@@ -1,0 +1,1 @@
+# ski_rent_database
