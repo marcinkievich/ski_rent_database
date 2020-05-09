@@ -1,0 +1,1359 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.10 (Ubuntu 10.10-1.pgdg16.04+1)
+-- Dumped by pg_dump version 10.11
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+--
+-- Name: plv8; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plv8 WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plv8; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plv8 IS 'PL/JavaScript (v8) trusted procedural language';
+
+
+--
+-- Name: btree_gin; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS btree_gin WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION btree_gin; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION btree_gin IS 'support for indexing common datatypes in GIN';
+
+
+--
+-- Name: btree_gist; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS btree_gist WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION btree_gist; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION btree_gist IS 'support for indexing common datatypes in GiST';
+
+
+--
+-- Name: citext; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS citext WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION citext; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION citext IS 'data type for case-insensitive character strings';
+
+
+--
+-- Name: cube; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS cube WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION cube; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION cube IS 'data type for multidimensional cubes';
+
+
+--
+-- Name: dblink; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS dblink WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION dblink; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION dblink IS 'connect to other PostgreSQL databases from within a database';
+
+
+--
+-- Name: dict_int; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS dict_int WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION dict_int; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION dict_int IS 'text search dictionary template for integers';
+
+
+--
+-- Name: dict_xsyn; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS dict_xsyn WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION dict_xsyn; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION dict_xsyn IS 'text search dictionary template for extended synonym processing';
+
+
+--
+-- Name: earthdistance; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS earthdistance WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION earthdistance; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION earthdistance IS 'calculate great-circle distances on the surface of the Earth';
+
+
+--
+-- Name: fuzzystrmatch; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS fuzzystrmatch WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION fuzzystrmatch; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION fuzzystrmatch IS 'determine similarities and distance between strings';
+
+
+--
+-- Name: hstore; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS hstore WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION hstore; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION hstore IS 'data type for storing sets of (key, value) pairs';
+
+
+--
+-- Name: intarray; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS intarray WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION intarray; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION intarray IS 'functions, operators, and index support for 1-D arrays of integers';
+
+
+--
+-- Name: ltree; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS ltree WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION ltree; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION ltree IS 'data type for hierarchical tree-like structures';
+
+
+--
+-- Name: pg_stat_statements; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_stat_statements WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_stat_statements; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pg_stat_statements IS 'track execution statistics of all SQL statements executed';
+
+
+--
+-- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
+
+
+--
+-- Name: pgcrypto; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pgcrypto; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pgcrypto IS 'cryptographic functions';
+
+
+--
+-- Name: pgrowlocks; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS pgrowlocks WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pgrowlocks; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pgrowlocks IS 'show row-level locking information';
+
+
+--
+-- Name: pgstattuple; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS pgstattuple WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION pgstattuple; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION pgstattuple IS 'show tuple-level statistics';
+
+
+--
+-- Name: tablefunc; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS tablefunc WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION tablefunc; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION tablefunc IS 'functions that manipulate whole tables, including crosstab';
+
+
+--
+-- Name: unaccent; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS unaccent WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION unaccent; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION unaccent IS 'text search dictionary that removes accents';
+
+
+--
+-- Name: uuid-ossp; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION "uuid-ossp"; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION "uuid-ossp" IS 'generate universally unique identifiers (UUIDs)';
+
+
+--
+-- Name: xml2; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS xml2 WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION xml2; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION xml2 IS 'XPath querying and XSLT';
+
+
+--
+-- Name: delrech(); Type: FUNCTION; Schema: public; Owner: eryfjzyp
+--
+
+CREATE FUNCTION public.delrech() RETURNS void
+    LANGUAGE sql
+    AS $$
+DELETE FROM rechnung AS r WHERE r.rnr NOT IN (SELECT b.rnr FROM bestellung AS b WHERE rnr IS NOT NULL)
+$$;
+
+
+ALTER FUNCTION public.delrech() OWNER TO eryfjzyp;
+
+--
+-- Name: preiserhoehung(); Type: FUNCTION; Schema: public; Owner: eryfjzyp
+--
+
+CREATE FUNCTION public.preiserhoehung() RETURNS void
+    LANGUAGE sql
+    AS $$
+UPDATE speise SET preis = FLOOR(preis)+ 0.99;
+$$;
+
+
+ALTER FUNCTION public.preiserhoehung() OWNER TO eryfjzyp;
+
+--
+-- Name: uod(); Type: FUNCTION; Schema: public; Owner: dbzjemox
+--
+
+CREATE FUNCTION public.uod() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+declare
+dtype int;
+did int;
+begin
+dtype=(select eq_type from customers where id=OLD.id);
+did=(select eq_id from customers where id=OLD.id);
+raise notice '%,%', did, dtype;
+if dtype = 1 THEN
+UPDATE skis SET availability = true where id=did;
+elsif dtype = 2 THEN
+UPDATE snowboard SET availability = true where id=did;
+elsif dtype = 3 THEN
+UPDATE boots SET availability = true where id=did;
+elsif dtype = 4 THEN
+UPDATE ski_poles SET availability = true where id=did;
+END IF;
+RETURN OLD;
+END;
+$$;
+
+
+ALTER FUNCTION public.uod() OWNER TO dbzjemox;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: boots; Type: TABLE; Schema: public; Owner: dbzjemox
+--
+
+CREATE TABLE public.boots (
+    id integer NOT NULL,
+    name character(50),
+    size integer,
+    purpose boolean,
+    price integer,
+    availability boolean
+);
+
+
+ALTER TABLE public.boots OWNER TO dbzjemox;
+
+--
+-- Name: boots_id_seq; Type: SEQUENCE; Schema: public; Owner: dbzjemox
+--
+
+CREATE SEQUENCE public.boots_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.boots_id_seq OWNER TO dbzjemox;
+
+--
+-- Name: boots_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dbzjemox
+--
+
+ALTER SEQUENCE public.boots_id_seq OWNED BY public.boots.id;
+
+
+--
+-- Name: customers; Type: TABLE; Schema: public; Owner: dbzjemox
+--
+
+CREATE TABLE public.customers (
+    id integer NOT NULL,
+    name character varying(50),
+    surname character varying(50),
+    eq_type integer,
+    eq_id integer
+);
+
+
+ALTER TABLE public.customers OWNER TO dbzjemox;
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE; Schema: public; Owner: dbzjemox
+--
+
+CREATE SEQUENCE public.customers_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.customers_id_seq OWNER TO dbzjemox;
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dbzjemox
+--
+
+ALTER SEQUENCE public.customers_id_seq OWNED BY public.customers.id;
+
+
+--
+-- Name: ski_poles; Type: TABLE; Schema: public; Owner: dbzjemox
+--
+
+CREATE TABLE public.ski_poles (
+    id integer NOT NULL,
+    name character(50),
+    length integer,
+    price integer,
+    availability boolean
+);
+
+
+ALTER TABLE public.ski_poles OWNER TO dbzjemox;
+
+--
+-- Name: ski_poles_id_seq; Type: SEQUENCE; Schema: public; Owner: dbzjemox
+--
+
+CREATE SEQUENCE public.ski_poles_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.ski_poles_id_seq OWNER TO dbzjemox;
+
+--
+-- Name: ski_poles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dbzjemox
+--
+
+ALTER SEQUENCE public.ski_poles_id_seq OWNED BY public.ski_poles.id;
+
+
+--
+-- Name: skis; Type: TABLE; Schema: public; Owner: dbzjemox
+--
+
+CREATE TABLE public.skis (
+    id integer NOT NULL,
+    name character(50),
+    length integer,
+    softness integer,
+    price integer,
+    availability boolean
+);
+
+
+ALTER TABLE public.skis OWNER TO dbzjemox;
+
+--
+-- Name: skis_id_seq; Type: SEQUENCE; Schema: public; Owner: dbzjemox
+--
+
+CREATE SEQUENCE public.skis_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.skis_id_seq OWNER TO dbzjemox;
+
+--
+-- Name: skis_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dbzjemox
+--
+
+ALTER SEQUENCE public.skis_id_seq OWNED BY public.skis.id;
+
+
+--
+-- Name: snowboard; Type: TABLE; Schema: public; Owner: dbzjemox
+--
+
+CREATE TABLE public.snowboard (
+    id integer NOT NULL,
+    name character(50),
+    length integer,
+    softness integer,
+    price integer,
+    availability boolean
+);
+
+
+ALTER TABLE public.snowboard OWNER TO dbzjemox;
+
+--
+-- Name: snowboard_id_seq; Type: SEQUENCE; Schema: public; Owner: dbzjemox
+--
+
+CREATE SEQUENCE public.snowboard_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.snowboard_id_seq OWNER TO dbzjemox;
+
+--
+-- Name: snowboard_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: dbzjemox
+--
+
+ALTER SEQUENCE public.snowboard_id_seq OWNED BY public.snowboard.id;
+
+
+--
+-- Name: boots id; Type: DEFAULT; Schema: public; Owner: dbzjemox
+--
+
+ALTER TABLE ONLY public.boots ALTER COLUMN id SET DEFAULT nextval('public.boots_id_seq'::regclass);
+
+
+--
+-- Name: customers id; Type: DEFAULT; Schema: public; Owner: dbzjemox
+--
+
+ALTER TABLE ONLY public.customers ALTER COLUMN id SET DEFAULT nextval('public.customers_id_seq'::regclass);
+
+
+--
+-- Name: ski_poles id; Type: DEFAULT; Schema: public; Owner: dbzjemox
+--
+
+ALTER TABLE ONLY public.ski_poles ALTER COLUMN id SET DEFAULT nextval('public.ski_poles_id_seq'::regclass);
+
+
+--
+-- Name: skis id; Type: DEFAULT; Schema: public; Owner: dbzjemox
+--
+
+ALTER TABLE ONLY public.skis ALTER COLUMN id SET DEFAULT nextval('public.skis_id_seq'::regclass);
+
+
+--
+-- Name: snowboard id; Type: DEFAULT; Schema: public; Owner: dbzjemox
+--
+
+ALTER TABLE ONLY public.snowboard ALTER COLUMN id SET DEFAULT nextval('public.snowboard_id_seq'::regclass);
+
+
+--
+-- Data for Name: boots; Type: TABLE DATA; Schema: public; Owner: dbzjemox
+--
+
+COPY public.boots (id, name, size, purpose, price, availability) FROM stdin;
+3	head                                              	30	t	15	t
+4	head                                              	31	t	15	t
+5	head                                              	32	t	15	t
+6	head                                              	33	t	15	t
+2	head                                              	29	t	15	t
+62	salomon                                           	29	f	15	t
+41	fischer                                           	28	f	15	t
+53	fischer                                           	40	f	15	t
+23	burton                                            	30	t	15	f
+48	fischer                                           	35	f	15	t
+43	fischer                                           	30	f	15	t
+7	head                                              	34	t	15	t
+8	head                                              	35	t	15	t
+9	head                                              	36	t	15	t
+10	head                                              	37	t	15	t
+11	head                                              	38	t	15	t
+12	head                                              	39	t	15	t
+13	head                                              	40	t	15	t
+14	head                                              	41	t	15	t
+15	head                                              	42	t	15	t
+16	head                                              	43	t	15	t
+17	head                                              	44	t	15	t
+18	head                                              	45	t	15	t
+19	head                                              	46	t	15	t
+20	head                                              	47	t	15	t
+22	burton                                            	29	t	15	t
+24	burton                                            	31	t	15	t
+25	burton                                            	32	t	15	t
+26	burton                                            	33	t	15	t
+27	burton                                            	34	t	15	t
+28	burton                                            	35	t	15	t
+29	burton                                            	36	t	15	t
+30	burton                                            	37	t	15	t
+31	burton                                            	38	t	15	t
+32	burton                                            	39	t	15	t
+33	burton                                            	40	t	15	t
+34	burton                                            	41	t	15	t
+35	burton                                            	42	t	15	t
+36	burton                                            	43	t	15	t
+37	burton                                            	44	t	15	t
+38	burton                                            	45	t	15	t
+39	burton                                            	46	t	15	t
+40	burton                                            	47	t	15	t
+44	fischer                                           	31	f	15	t
+45	fischer                                           	32	f	15	t
+46	fischer                                           	33	f	15	t
+47	fischer                                           	34	f	15	t
+49	fischer                                           	36	f	15	t
+50	fischer                                           	37	f	15	t
+51	fischer                                           	38	f	15	t
+52	fischer                                           	39	f	15	t
+54	fischer                                           	41	f	15	t
+55	fischer                                           	42	f	15	t
+56	fischer                                           	43	f	15	t
+57	fischer                                           	44	f	15	t
+58	fischer                                           	45	f	15	t
+59	fischer                                           	46	f	15	t
+60	fischer                                           	47	f	15	t
+63	salomon                                           	30	f	15	t
+64	salomon                                           	31	f	15	t
+65	salomon                                           	32	f	15	t
+66	salomon                                           	33	f	15	t
+67	salomon                                           	34	f	15	t
+68	salomon                                           	35	f	15	t
+69	salomon                                           	36	f	15	t
+70	salomon                                           	37	f	15	t
+71	salomon                                           	38	f	15	t
+72	salomon                                           	39	f	15	t
+73	salomon                                           	40	f	15	t
+74	salomon                                           	41	f	15	t
+75	salomon                                           	42	f	15	t
+76	salomon                                           	43	f	15	t
+77	salomon                                           	44	f	15	t
+78	salomon                                           	45	f	15	t
+79	salomon                                           	46	f	15	t
+80	salomon                                           	47	f	15	t
+42	fischer                                           	29	f	15	t
+21	burton                                            	28	t	15	t
+1	head                                              	28	t	15	f
+61	salomon                                           	28	f	15	t
+\.
+
+
+--
+-- Data for Name: customers; Type: TABLE DATA; Schema: public; Owner: dbzjemox
+--
+
+COPY public.customers (id, name, surname, eq_type, eq_id) FROM stdin;
+206	Robert	Davis	1	153
+207	Robert	Davis	3	23
+211	temp	2	3	1
+212	temp	2	4	1
+\.
+
+
+--
+-- Data for Name: ski_poles; Type: TABLE DATA; Schema: public; Owner: dbzjemox
+--
+
+COPY public.ski_poles (id, name, length, price, availability) FROM stdin;
+2	fischer                                           	80	10	t
+5	fischer                                           	95	10	t
+6	fischer                                           	100	10	t
+7	fischer                                           	105	10	t
+8	fischer                                           	110	10	t
+9	fischer                                           	115	10	t
+10	fischer                                           	120	10	t
+11	fischer                                           	125	10	t
+13	fischer                                           	135	10	t
+15	salomon                                           	80	10	t
+16	salomon                                           	85	10	t
+18	salomon                                           	95	10	t
+19	salomon                                           	100	10	t
+20	salomon                                           	105	10	t
+21	salomon                                           	110	10	t
+22	salomon                                           	115	10	t
+23	salomon                                           	120	10	t
+24	salomon                                           	125	10	t
+25	salomon                                           	130	10	t
+26	salomon                                           	135	10	t
+4	fischer                                           	90	10	t
+14	salomon                                           	75	10	t
+17	salomon                                           	90	10	t
+1	fischer                                           	75	10	f
+3	fischer                                           	85	10	t
+12	fischer                                           	130	10	t
+\.
+
+
+--
+-- Data for Name: skis; Type: TABLE DATA; Schema: public; Owner: dbzjemox
+--
+
+COPY public.skis (id, name, length, softness, price, availability) FROM stdin;
+102	rossignol                                         	94	3	50	t
+202	salomon                                           	94	5	51	t
+151	atomic                                            	92	4	51	t
+1	head                                              	92	1	50	t
+82	fischer                                           	154	4	50	t
+83	fischer                                           	156	4	50	t
+163	atomic                                            	116	4	51	t
+2	head                                              	94	1	50	t
+52	fischer                                           	94	2	50	t
+244	salomon                                           	178	10	51	t
+245	salomon                                           	180	10	51	t
+246	salomon                                           	182	10	51	t
+247	salomon                                           	184	10	51	t
+248	salomon                                           	186	10	51	t
+3	head                                              	96	1	50	t
+4	head                                              	98	1	50	t
+6	head                                              	102	1	50	t
+7	head                                              	104	1	50	t
+8	head                                              	106	1	50	t
+9	head                                              	108	1	50	t
+10	head                                              	110	1	50	t
+11	head                                              	112	1	50	t
+12	head                                              	114	1	50	t
+13	head                                              	116	1	50	t
+14	head                                              	118	1	50	t
+15	head                                              	120	1	50	t
+16	head                                              	122	1	50	t
+17	head                                              	124	1	50	t
+18	head                                              	126	1	50	t
+19	head                                              	128	1	50	t
+20	head                                              	130	1	50	t
+21	head                                              	132	1	50	t
+22	head                                              	134	1	50	t
+23	head                                              	136	1	50	t
+24	head                                              	138	1	50	t
+25	head                                              	140	1	50	t
+26	head                                              	142	1	50	t
+27	head                                              	144	2	50	t
+28	head                                              	146	2	50	t
+29	head                                              	148	2	50	t
+30	head                                              	150	2	50	t
+31	head                                              	152	2	50	t
+32	head                                              	154	2	50	t
+33	head                                              	156	2	50	t
+34	head                                              	158	2	50	t
+35	head                                              	160	2	50	t
+36	head                                              	162	2	50	t
+37	head                                              	164	2	50	t
+38	head                                              	166	2	50	t
+39	head                                              	168	2	50	t
+40	head                                              	170	2	50	t
+41	head                                              	172	2	50	t
+42	head                                              	174	2	50	t
+43	head                                              	176	2	50	t
+44	head                                              	178	2	50	t
+45	head                                              	180	2	50	t
+46	head                                              	182	2	50	t
+47	head                                              	184	2	50	t
+48	head                                              	186	2	50	t
+49	head                                              	188	2	50	t
+50	head                                              	190	2	50	t
+53	fischer                                           	96	2	50	t
+54	fischer                                           	98	2	50	t
+55	fischer                                           	100	2	50	t
+56	fischer                                           	102	2	50	t
+57	fischer                                           	104	2	50	t
+58	fischer                                           	106	2	50	t
+59	fischer                                           	108	2	50	t
+60	fischer                                           	110	2	50	t
+61	fischer                                           	112	2	50	t
+62	fischer                                           	114	2	50	t
+63	fischer                                           	116	2	50	t
+64	fischer                                           	118	2	50	t
+65	fischer                                           	120	2	50	t
+66	fischer                                           	122	2	50	t
+67	fischer                                           	124	2	50	t
+249	salomon                                           	188	10	51	t
+68	fischer                                           	126	2	50	t
+69	fischer                                           	128	2	50	t
+70	fischer                                           	130	2	50	t
+71	fischer                                           	132	2	50	t
+72	fischer                                           	134	2	50	t
+73	fischer                                           	136	2	50	t
+74	fischer                                           	138	2	50	t
+75	fischer                                           	140	2	50	t
+76	fischer                                           	142	2	50	t
+77	fischer                                           	144	4	50	t
+78	fischer                                           	146	4	50	t
+79	fischer                                           	148	4	50	t
+80	fischer                                           	150	4	50	t
+81	fischer                                           	152	4	50	t
+5	head                                              	100	1	50	t
+84	fischer                                           	158	4	50	t
+85	fischer                                           	160	4	50	t
+86	fischer                                           	162	4	50	t
+87	fischer                                           	164	4	50	t
+88	fischer                                           	166	4	50	t
+89	fischer                                           	168	4	50	t
+90	fischer                                           	170	4	50	t
+91	fischer                                           	172	4	50	t
+92	fischer                                           	174	4	50	t
+93	fischer                                           	176	4	50	t
+94	fischer                                           	178	4	50	t
+95	fischer                                           	180	4	50	t
+96	fischer                                           	182	4	50	t
+97	fischer                                           	184	4	50	t
+98	fischer                                           	186	4	50	t
+99	fischer                                           	188	4	50	t
+100	fischer                                           	190	4	50	t
+103	rossignol                                         	96	3	50	t
+104	rossignol                                         	98	3	50	t
+105	rossignol                                         	100	3	50	t
+106	rossignol                                         	102	3	50	t
+107	rossignol                                         	104	3	50	t
+108	rossignol                                         	106	3	50	t
+109	rossignol                                         	108	3	50	t
+110	rossignol                                         	110	3	50	t
+111	rossignol                                         	112	3	50	t
+112	rossignol                                         	114	3	50	t
+113	rossignol                                         	116	3	50	t
+114	rossignol                                         	118	3	50	t
+115	rossignol                                         	120	3	50	t
+116	rossignol                                         	122	3	50	t
+117	rossignol                                         	124	3	50	t
+118	rossignol                                         	126	3	50	t
+119	rossignol                                         	128	3	50	t
+120	rossignol                                         	130	3	50	t
+121	rossignol                                         	132	3	50	t
+122	rossignol                                         	134	3	50	t
+123	rossignol                                         	136	3	50	t
+124	rossignol                                         	138	3	50	t
+125	rossignol                                         	140	3	50	t
+126	rossignol                                         	142	3	50	t
+127	rossignol                                         	144	6	50	t
+128	rossignol                                         	146	6	50	t
+129	rossignol                                         	148	6	50	t
+130	rossignol                                         	150	6	50	t
+131	rossignol                                         	152	6	50	t
+132	rossignol                                         	154	6	50	t
+133	rossignol                                         	156	6	50	t
+134	rossignol                                         	158	6	50	t
+135	rossignol                                         	160	6	50	t
+136	rossignol                                         	162	6	50	t
+137	rossignol                                         	164	6	50	t
+138	rossignol                                         	166	6	50	t
+139	rossignol                                         	168	6	50	t
+140	rossignol                                         	170	6	50	t
+141	rossignol                                         	172	6	50	t
+142	rossignol                                         	174	6	50	t
+143	rossignol                                         	176	6	50	t
+144	rossignol                                         	178	6	50	t
+145	rossignol                                         	180	6	50	t
+146	rossignol                                         	182	6	50	t
+147	rossignol                                         	184	6	50	t
+148	rossignol                                         	186	6	50	t
+149	rossignol                                         	188	6	50	t
+150	rossignol                                         	190	6	50	t
+154	atomic                                            	98	4	51	t
+156	atomic                                            	102	4	51	t
+157	atomic                                            	104	4	51	t
+158	atomic                                            	106	4	51	t
+159	atomic                                            	108	4	51	t
+160	atomic                                            	110	4	51	t
+161	atomic                                            	112	4	51	t
+162	atomic                                            	114	4	51	t
+164	atomic                                            	118	4	51	t
+165	atomic                                            	120	4	51	t
+166	atomic                                            	122	4	51	t
+167	atomic                                            	124	4	51	t
+168	atomic                                            	126	4	51	t
+169	atomic                                            	128	4	51	t
+170	atomic                                            	130	4	51	t
+171	atomic                                            	132	4	51	t
+172	atomic                                            	134	4	51	t
+173	atomic                                            	136	4	51	t
+174	atomic                                            	138	4	51	t
+175	atomic                                            	140	4	51	t
+176	atomic                                            	142	4	51	t
+177	atomic                                            	144	8	51	t
+178	atomic                                            	146	8	51	t
+179	atomic                                            	148	8	51	t
+180	atomic                                            	150	8	51	t
+181	atomic                                            	152	8	51	t
+182	atomic                                            	154	8	51	t
+183	atomic                                            	156	8	51	t
+184	atomic                                            	158	8	51	t
+185	atomic                                            	160	8	51	t
+186	atomic                                            	162	8	51	t
+187	atomic                                            	164	8	51	t
+188	atomic                                            	166	8	51	t
+189	atomic                                            	168	8	51	t
+190	atomic                                            	170	8	51	t
+191	atomic                                            	172	8	51	t
+192	atomic                                            	174	8	51	t
+193	atomic                                            	176	8	51	t
+194	atomic                                            	178	8	51	t
+195	atomic                                            	180	8	51	t
+196	atomic                                            	182	8	51	t
+197	atomic                                            	184	8	51	t
+198	atomic                                            	186	8	51	t
+199	atomic                                            	188	8	51	t
+200	atomic                                            	190	8	51	t
+203	salomon                                           	96	5	51	t
+204	salomon                                           	98	5	51	t
+206	salomon                                           	102	5	51	t
+207	salomon                                           	104	5	51	t
+208	salomon                                           	106	5	51	t
+209	salomon                                           	108	5	51	t
+210	salomon                                           	110	5	51	t
+211	salomon                                           	112	5	51	t
+212	salomon                                           	114	5	51	t
+213	salomon                                           	116	5	51	t
+214	salomon                                           	118	5	51	t
+215	salomon                                           	120	5	51	t
+216	salomon                                           	122	5	51	t
+217	salomon                                           	124	5	51	t
+218	salomon                                           	126	5	51	t
+219	salomon                                           	128	5	51	t
+220	salomon                                           	130	5	51	t
+221	salomon                                           	132	5	51	t
+222	salomon                                           	134	5	51	t
+223	salomon                                           	136	5	51	t
+224	salomon                                           	138	5	51	t
+225	salomon                                           	140	5	51	t
+226	salomon                                           	142	5	51	t
+227	salomon                                           	144	10	51	t
+228	salomon                                           	146	10	51	t
+229	salomon                                           	148	10	51	t
+230	salomon                                           	150	10	51	t
+231	salomon                                           	152	10	51	t
+232	salomon                                           	154	10	51	t
+233	salomon                                           	156	10	51	t
+234	salomon                                           	158	10	51	t
+235	salomon                                           	160	10	51	t
+153	atomic                                            	96	4	51	f
+152	atomic                                            	94	4	51	t
+236	salomon                                           	162	10	51	t
+237	salomon                                           	164	10	51	t
+238	salomon                                           	166	10	51	t
+239	salomon                                           	168	10	51	t
+240	salomon                                           	170	10	51	t
+241	salomon                                           	172	10	51	t
+242	salomon                                           	174	10	51	t
+243	salomon                                           	176	10	51	t
+250	salomon                                           	190	10	51	t
+205	salomon                                           	100	5	51	t
+155	atomic                                            	100	4	51	t
+201	salomon                                           	92	5	51	t
+51	fischer                                           	92	2	50	t
+101	rossignol                                         	92	3	50	t
+\.
+
+
+--
+-- Data for Name: snowboard; Type: TABLE DATA; Schema: public; Owner: dbzjemox
+--
+
+COPY public.snowboard (id, name, length, softness, price, availability) FROM stdin;
+3	head                                              	96	1	50	t
+201	salomon                                           	92	5	51	t
+151	raven                                             	92	4	51	t
+4	head                                              	98	1	50	t
+1	head                                              	92	1	50	t
+51	burton                                            	92	2	50	t
+82	burton                                            	154	4	50	t
+53	burton                                            	96	2	50	t
+5	head                                              	100	1	50	t
+6	head                                              	102	1	50	t
+8	head                                              	106	1	50	t
+9	head                                              	108	1	50	t
+10	head                                              	110	1	50	t
+11	head                                              	112	1	50	t
+12	head                                              	114	1	50	t
+13	head                                              	116	1	50	t
+14	head                                              	118	1	50	t
+15	head                                              	120	1	50	t
+16	head                                              	122	1	50	t
+17	head                                              	124	1	50	t
+18	head                                              	126	1	50	t
+19	head                                              	128	1	50	t
+20	head                                              	130	1	50	t
+21	head                                              	132	1	50	t
+22	head                                              	134	1	50	t
+23	head                                              	136	1	50	t
+24	head                                              	138	1	50	t
+25	head                                              	140	1	50	t
+26	head                                              	142	1	50	t
+27	head                                              	144	2	50	t
+28	head                                              	146	2	50	t
+29	head                                              	148	2	50	t
+30	head                                              	150	2	50	t
+31	head                                              	152	2	50	t
+32	head                                              	154	2	50	t
+33	head                                              	156	2	50	t
+34	head                                              	158	2	50	t
+35	head                                              	160	2	50	t
+36	head                                              	162	2	50	t
+37	head                                              	164	2	50	t
+38	head                                              	166	2	50	t
+39	head                                              	168	2	50	t
+40	head                                              	170	2	50	t
+41	head                                              	172	2	50	t
+42	head                                              	174	2	50	t
+43	head                                              	176	2	50	t
+44	head                                              	178	2	50	t
+45	head                                              	180	2	50	t
+46	head                                              	182	2	50	t
+47	head                                              	184	2	50	t
+48	head                                              	186	2	50	t
+49	head                                              	188	2	50	t
+50	head                                              	190	2	50	t
+54	burton                                            	98	2	50	t
+55	burton                                            	100	2	50	t
+56	burton                                            	102	2	50	t
+57	burton                                            	104	2	50	t
+58	burton                                            	106	2	50	t
+59	burton                                            	108	2	50	t
+60	burton                                            	110	2	50	t
+61	burton                                            	112	2	50	t
+62	burton                                            	114	2	50	t
+63	burton                                            	116	2	50	t
+64	burton                                            	118	2	50	t
+65	burton                                            	120	2	50	t
+66	burton                                            	122	2	50	t
+67	burton                                            	124	2	50	t
+68	burton                                            	126	2	50	t
+69	burton                                            	128	2	50	t
+70	burton                                            	130	2	50	t
+71	burton                                            	132	2	50	t
+72	burton                                            	134	2	50	t
+73	burton                                            	136	2	50	t
+74	burton                                            	138	2	50	t
+75	burton                                            	140	2	50	t
+76	burton                                            	142	2	50	t
+244	salomon                                           	178	10	51	t
+7	head                                              	104	1	50	t
+77	burton                                            	144	4	50	t
+78	burton                                            	146	4	50	t
+79	burton                                            	148	4	50	t
+80	burton                                            	150	4	50	t
+81	burton                                            	152	4	50	t
+83	burton                                            	156	4	50	t
+84	burton                                            	158	4	50	t
+85	burton                                            	160	4	50	t
+86	burton                                            	162	4	50	t
+87	burton                                            	164	4	50	t
+88	burton                                            	166	4	50	t
+89	burton                                            	168	4	50	t
+90	burton                                            	170	4	50	t
+91	burton                                            	172	4	50	t
+92	burton                                            	174	4	50	t
+93	burton                                            	176	4	50	t
+94	burton                                            	178	4	50	t
+95	burton                                            	180	4	50	t
+96	burton                                            	182	4	50	t
+97	burton                                            	184	4	50	t
+98	burton                                            	186	4	50	t
+99	burton                                            	188	4	50	t
+100	burton                                            	190	4	50	t
+102	dc                                                	94	3	50	t
+103	dc                                                	96	3	50	t
+104	dc                                                	98	3	50	t
+105	dc                                                	100	3	50	t
+106	dc                                                	102	3	50	t
+107	dc                                                	104	3	50	t
+108	dc                                                	106	3	50	t
+109	dc                                                	108	3	50	t
+110	dc                                                	110	3	50	t
+111	dc                                                	112	3	50	t
+112	dc                                                	114	3	50	t
+113	dc                                                	116	3	50	t
+114	dc                                                	118	3	50	t
+115	dc                                                	120	3	50	t
+116	dc                                                	122	3	50	t
+117	dc                                                	124	3	50	t
+118	dc                                                	126	3	50	t
+119	dc                                                	128	3	50	t
+120	dc                                                	130	3	50	t
+121	dc                                                	132	3	50	t
+122	dc                                                	134	3	50	t
+123	dc                                                	136	3	50	t
+124	dc                                                	138	3	50	t
+125	dc                                                	140	3	50	t
+126	dc                                                	142	3	50	t
+127	dc                                                	144	6	50	t
+128	dc                                                	146	6	50	t
+129	dc                                                	148	6	50	t
+130	dc                                                	150	6	50	t
+131	dc                                                	152	6	50	t
+132	dc                                                	154	6	50	t
+133	dc                                                	156	6	50	t
+134	dc                                                	158	6	50	t
+135	dc                                                	160	6	50	t
+136	dc                                                	162	6	50	t
+137	dc                                                	164	6	50	t
+138	dc                                                	166	6	50	t
+139	dc                                                	168	6	50	t
+140	dc                                                	170	6	50	t
+141	dc                                                	172	6	50	t
+142	dc                                                	174	6	50	t
+143	dc                                                	176	6	50	t
+144	dc                                                	178	6	50	t
+145	dc                                                	180	6	50	t
+146	dc                                                	182	6	50	t
+147	dc                                                	184	6	50	t
+148	dc                                                	186	6	50	t
+149	dc                                                	188	6	50	t
+152	raven                                             	94	4	51	t
+153	raven                                             	96	4	51	t
+154	raven                                             	98	4	51	t
+155	raven                                             	100	4	51	t
+156	raven                                             	102	4	51	t
+157	raven                                             	104	4	51	t
+150	dc                                                	190	6	50	t
+158	raven                                             	106	4	51	t
+159	raven                                             	108	4	51	t
+160	raven                                             	110	4	51	t
+161	raven                                             	112	4	51	t
+162	raven                                             	114	4	51	t
+163	raven                                             	116	4	51	t
+164	raven                                             	118	4	51	t
+165	raven                                             	120	4	51	t
+166	raven                                             	122	4	51	t
+167	raven                                             	124	4	51	t
+168	raven                                             	126	4	51	t
+169	raven                                             	128	4	51	t
+170	raven                                             	130	4	51	t
+171	raven                                             	132	4	51	t
+172	raven                                             	134	4	51	t
+173	raven                                             	136	4	51	t
+174	raven                                             	138	4	51	t
+175	raven                                             	140	4	51	t
+176	raven                                             	142	4	51	t
+177	raven                                             	144	8	51	t
+178	raven                                             	146	8	51	t
+179	raven                                             	148	8	51	t
+180	raven                                             	150	8	51	t
+181	raven                                             	152	8	51	t
+182	raven                                             	154	8	51	t
+183	raven                                             	156	8	51	t
+184	raven                                             	158	8	51	t
+185	raven                                             	160	8	51	t
+186	raven                                             	162	8	51	t
+187	raven                                             	164	8	51	t
+188	raven                                             	166	8	51	t
+189	raven                                             	168	8	51	t
+190	raven                                             	170	8	51	t
+191	raven                                             	172	8	51	t
+192	raven                                             	174	8	51	t
+193	raven                                             	176	8	51	t
+194	raven                                             	178	8	51	t
+195	raven                                             	180	8	51	t
+196	raven                                             	182	8	51	t
+197	raven                                             	184	8	51	t
+198	raven                                             	186	8	51	t
+199	raven                                             	188	8	51	t
+200	raven                                             	190	8	51	t
+202	salomon                                           	94	5	51	t
+203	salomon                                           	96	5	51	t
+204	salomon                                           	98	5	51	t
+205	salomon                                           	100	5	51	t
+206	salomon                                           	102	5	51	t
+207	salomon                                           	104	5	51	t
+208	salomon                                           	106	5	51	t
+209	salomon                                           	108	5	51	t
+210	salomon                                           	110	5	51	t
+211	salomon                                           	112	5	51	t
+212	salomon                                           	114	5	51	t
+213	salomon                                           	116	5	51	t
+214	salomon                                           	118	5	51	t
+215	salomon                                           	120	5	51	t
+216	salomon                                           	122	5	51	t
+217	salomon                                           	124	5	51	t
+218	salomon                                           	126	5	51	t
+219	salomon                                           	128	5	51	t
+220	salomon                                           	130	5	51	t
+221	salomon                                           	132	5	51	t
+222	salomon                                           	134	5	51	t
+223	salomon                                           	136	5	51	t
+224	salomon                                           	138	5	51	t
+225	salomon                                           	140	5	51	t
+226	salomon                                           	142	5	51	t
+227	salomon                                           	144	10	51	t
+228	salomon                                           	146	10	51	t
+229	salomon                                           	148	10	51	t
+230	salomon                                           	150	10	51	t
+231	salomon                                           	152	10	51	t
+232	salomon                                           	154	10	51	t
+233	salomon                                           	156	10	51	t
+234	salomon                                           	158	10	51	t
+235	salomon                                           	160	10	51	t
+236	salomon                                           	162	10	51	t
+237	salomon                                           	164	10	51	t
+238	salomon                                           	166	10	51	t
+239	salomon                                           	168	10	51	t
+240	salomon                                           	170	10	51	t
+241	salomon                                           	172	10	51	t
+242	salomon                                           	174	10	51	t
+243	salomon                                           	176	10	51	t
+245	salomon                                           	180	10	51	t
+246	salomon                                           	182	10	51	t
+247	salomon                                           	184	10	51	t
+248	salomon                                           	186	10	51	t
+249	salomon                                           	188	10	51	t
+250	salomon                                           	190	10	51	t
+2	head                                              	94	1	50	t
+52	burton                                            	94	2	50	t
+101	dc                                                	92	3	50	t
+\.
+
+
+--
+-- Name: boots_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dbzjemox
+--
+
+SELECT pg_catalog.setval('public.boots_id_seq', 1, false);
+
+
+--
+-- Name: customers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dbzjemox
+--
+
+SELECT pg_catalog.setval('public.customers_id_seq', 212, true);
+
+
+--
+-- Name: ski_poles_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dbzjemox
+--
+
+SELECT pg_catalog.setval('public.ski_poles_id_seq', 1, false);
+
+
+--
+-- Name: skis_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dbzjemox
+--
+
+SELECT pg_catalog.setval('public.skis_id_seq', 1, true);
+
+
+--
+-- Name: snowboard_id_seq; Type: SEQUENCE SET; Schema: public; Owner: dbzjemox
+--
+
+SELECT pg_catalog.setval('public.snowboard_id_seq', 1, false);
+
+
+--
+-- Name: boots boots_pkey; Type: CONSTRAINT; Schema: public; Owner: dbzjemox
+--
+
+ALTER TABLE ONLY public.boots
+    ADD CONSTRAINT boots_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: customers customers_pkey; Type: CONSTRAINT; Schema: public; Owner: dbzjemox
+--
+
+ALTER TABLE ONLY public.customers
+    ADD CONSTRAINT customers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: ski_poles ski_poles_pkey; Type: CONSTRAINT; Schema: public; Owner: dbzjemox
+--
+
+ALTER TABLE ONLY public.ski_poles
+    ADD CONSTRAINT ski_poles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: skis skis_pkey; Type: CONSTRAINT; Schema: public; Owner: dbzjemox
+--
+
+ALTER TABLE ONLY public.skis
+    ADD CONSTRAINT skis_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: snowboard snowboard_pkey; Type: CONSTRAINT; Schema: public; Owner: dbzjemox
+--
+
+ALTER TABLE ONLY public.snowboard
+    ADD CONSTRAINT snowboard_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: customers uod_t; Type: TRIGGER; Schema: public; Owner: dbzjemox
+--
+
+CREATE TRIGGER uod_t BEFORE DELETE ON public.customers FOR EACH ROW EXECUTE PROCEDURE public.uod();
+
+
+--
+-- PostgreSQL database dump complete
+--
+

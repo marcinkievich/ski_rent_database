@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>rizalt</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+</head>
+<body>
+    {%  if message %}
+        <p class="message">{{  message | safe }}</p>
+    {% endif %}
+    <div class="form-group">
+        <h1>Equipment</h1>
+        <form method="POST" action="summary">
+
+            <table class="table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Length</th>
+                        <th>Softness</th>
+                        <th>Price</th>
+                        <th>Availability</th>
+                    </tr>
+                </thead>
+                {% for eq in eq_list %}
+                    <tr>
+                        <td>{{ eq.id }}</td>
+                        <td>{{ eq.name }}</td>
+                        <td>{{ eq.length }}</td>
+                        <td>{{ eq.softness }}</td>
+                        <td>{{ eq.price }}</td>
+                        <td>{{ eq.availability }}</td>
+                        <td>
+                            <input type="checkbox" value="{{ eq.id }}" name="eq_checked">
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+            <h1>Boots</h1>
+            <table class="table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Size</th>
+                    <th>Price</th>
+                    <th>Availability</th>
+                </tr>
+                {% for boots in boots_list %}
+                    <tr>
+
+                        <td>{{ boots.id }}</td>
+                        <td>{{ boots.name }}</td>
+                        <td>{{ boots.size }}</td>
+                        <td>{{ boots.price }}</td>
+                        <td>{{ boots.availability }}</td>
+
+                        <td>
+                            <input type="checkbox" value="{{ boots.id }}" name="boots_checked">
+                        </td>
+
+                    </tr>
+                {% endfor %}
+            </table>
+            {% if eq_type == '1'  %}
+                <h1>Ski Poles</h1>
+                <table class="table-striped">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Length</th>
+                        <th>Price</th>
+                        <th>Availability</th>
+                    </tr>
+                    {% for poles in ski_poles_list %}
+                        <tr>
+
+                            <td>{{ poles.id }}</td>
+                            <td>{{ poles.name }}</td>
+                            <td>{{ poles.length }}</td>
+                            <td>{{ poles.price }}</td>
+                            <td>{{ poles.availability }}</td>
+                            <td>
+                                <input type="checkbox" value="{{ poles.id }}" name="ski_poles_checked">
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            {% endif %}
+            <h3>Customer name</h3>
+            <input type="text" name="name" placeholder="Name"/>
+            <h3>Customer surname</h3>
+            <input type="text" name="surname" placeholder="Surname"/>
+            <input type="submit" value="Submit" class="btn" />
+            <input type="hidden" name="eq_type" value="{{ eq_type }}"/>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width", initial-scale="1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../static/css/bootstrap.css">
+    <title>home</title>
+    <style>
+        .select{
+            display: none;
+        }
+        .ski_option
+    </style>
+
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("select").change(function(){
+                $(this).find("option:selected").each(function(){
+                    var optionValue = $(this).attr("value");
+                    if(optionValue){
+                        $(".box").not("." + optionValue).hide();
+                        $("." + optionValue).show();
+                    } else{
+                        $(".box").hide();
+                    }
+                });
+            }).change();
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <!-- @ todo - result display -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class=flashes>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    <form action="submit" method="POST">
+        <div class="form-group">
+            <h3>Type of equipment</h3>
+            <select id="eq_type" name="eq_type">
+                <option value="0">Select equipment type</option>
+                <option value="ski_option">Skis</option>
+                <option value="2">Snowboard</option>
+                ></select>
+        </div>
+        <div class="form-group">
+            <h3>Equipment length</h3>
+            {{ form.csrf_token }}
+            {{ form.length }}
+        </div>
+        <div class="form-group">
+            <h3>Size of boots</h3>
+            {{ form.size }}
+        </div>
+        <div class="select ski_option">
+            <h3>Length of ski poles</h3>
+            {{ form.ski_poles}}
+        </div>
+        <input type="submit" value="Submit" class="btn" />
+    </form>
+    <form method="POST" action="/temp">
+        <input type="submit" value="Database" class="btn"/>
+    </form>
+
+</div>
+</body>
+</html>
